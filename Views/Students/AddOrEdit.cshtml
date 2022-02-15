@@ -4,7 +4,7 @@
 }
 
 <h1>
-    Registration for/h1>
+    Registration form</h1>
 
     <hr />
     <div class="row">
@@ -14,26 +14,40 @@
                 <input type="hidden" asp-for="Id" />
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
+                    <input asp-for="Name" class="form-control" type="text" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label asp-for="Age" class="control-label"></label>
-                        <input asp-for="Age" class="form-control" />
+                        <input asp-for="Age" class="form-control" type="text"/>
                         <span asp-validation-for="Age" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label asp-for="Collegename" class="control-label"></label>
-                        <input asp-for="Collegename" class="form-control" />
+                        <input asp-for="Collegename" class="form-control" type="text" />
                         <span asp-validation-for="Collegename" class="text-danger"></span>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="Address" class="control-label"></label>
-                    <input asp-for="Address" class="form-control" />
+                    <input asp-for="Address" class="form-control"  type="text"/>
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" type="email"/>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control"  type="password"/>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <input type="submit" value="Submit" class="btn btn-primary btn-block" />

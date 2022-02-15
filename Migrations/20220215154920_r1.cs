@@ -2,7 +2,7 @@
 
 namespace CodeFirstCrud.Migrations
 {
-    public partial class m9 : Migration
+    public partial class r1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -56,6 +56,13 @@ namespace CodeFirstCrud.Controllers
         }
 
 
+        public async Task<IActionResult> Login(Student student) 
+        {
+            var response = Context.tbl_Student.FirstOrDefault(x => x.Email == student.Email && x.Password == student.Password);
+
+            return RedirectToAction(nameof(Login));
+        }
+
 
     }
 }

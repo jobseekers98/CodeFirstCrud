@@ -24,5 +24,14 @@ namespace CodeFirstCrud.Models
         [Column(TypeName = "nvarchar(270)")]
         public string Address { get; set; }
 
+        [Required(ErrorMessage = "Please enter your Email Address")]
+        [Column(TypeName = "nvarchar(270)")]
+        public string Email { get; set; }
+        [Required(ErrorMessage = "Please enter your password ")]
+        [Column(TypeName = "nvarchar(270)")]
+        public string Password { get; set; }
+
+
     }
+
 }
