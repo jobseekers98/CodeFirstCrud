@@ -15,6 +15,8 @@ namespace CodeFirstCrud.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+
+        //private readonly ILogger _logger;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -42,5 +44,20 @@ namespace CodeFirstCrud.Controllers
          {
             return View();
          }
+
+        public ActionResult<IEnumerable<string>> Get(int id)
+        {
+            _logger.LogInformation("Start : Getting item details for {ID}", id);
+
+            List<string> list = new List<string>();
+            list.Add("A");
+            list.Add("B");
+            list.Add("C");
+
+            _logger.LogInformation($"Completed : Item details are { string.Join(", ", list) }");
+            return list;
+        }
+
+
     }
 }

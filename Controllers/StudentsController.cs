@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,19 +16,40 @@ namespace CodeFirstCrud.Controllers
     public class StudentsController : Controller
     {
         private DatabaseContext Context;
+        private ILogger<StudentsController> _logger;
 
-        public StudentsController(DatabaseContext common)
+        public StudentsController(DatabaseContext common, ILogger<StudentsController> logger)
         {
             Context = common;
+            _logger = logger;
         }
 
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            return View(await Context.tbl_Student.Where(s=>s.Status==true).ToListAsync());
+            //try
+            //{
+            //    int a = 12;
+            //    int b = 0;
+            //    int c = a / b;
+            //    var studentList = await Context.tbl_Student.Where(s => s.Status == true).ToListAsync();
+            //    return View(studentList);
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex.ToString());
+
+            //}
+            //return View();
+            //throw new Exception("Error in details View");
+
+            var studentList = await Context.tbl_Student.Where(s => s.Status == true).ToListAsync();
+            return View(studentList);
+
         }
         //Get Method code
-        
+
+        [Authorize]
         public IActionResult AddOrEdit(int id = 0)
         {
             if (id == 0)
@@ -41,8 +63,10 @@ namespace CodeFirstCrud.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> AddOrEdit(Student student)
         {
             if (ModelState.IsValid)
@@ -66,7 +90,9 @@ namespace CodeFirstCrud.Controllers
                         Context.Add(student);
                         await Context.SaveChangesAsync();
                         ViewBag.data = "Record has been Created!";
+                       // return View(student);
                         return RedirectToAction("Index", "Students");
+
                     }
                 }
                 else
@@ -76,28 +102,29 @@ namespace CodeFirstCrud.Controllers
                     return RedirectToAction("Index", "Students");
                 }
             }
-            else 
+            else
             {
                 return View(student);
-            
-            
+
+
             }
-            
+
         }
+
         //Delete method
         public async Task<IActionResult> Delete(int? id)
         {
-            
+
 
             var employee = await Context.tbl_Student.FindAsync(id);
             employee.Status = false;
             Context.Update(employee);
             await Context.SaveChangesAsync();
-             return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
 
-        public IActionResult Login( )
+        public IActionResult Login()
         {
             LoginModel objLoginModel = new LoginModel();
             //objLoginModel.ReturnUrl = ReturnUrl;
@@ -109,7 +136,7 @@ namespace CodeFirstCrud.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 var user = Context.tbl_Student.Where(x => x.Email == objLoginModel.Email && x.Password == objLoginModel.Password).FirstOrDefault();
                 if (user == null)
                 {
@@ -134,12 +161,12 @@ namespace CodeFirstCrud.Controllers
                     //SignInAsync is a Extension method for Sign in a principal for the specified scheme.
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         principal, new AuthenticationProperties() /*{ IsPersistent = objLoginModel.RememberLogin }*/);
-                   
-                    
+
+
                     return RedirectToAction("Index", "Students");
                 }
             }
-            else 
+            else
             {
                 return RedirectToAction("Login", "Students");
             }
